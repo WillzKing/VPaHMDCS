@@ -1,0 +1,12 @@
+[
+  {
+    "timestamp": "2025-12-25T01:43:34.416693",
+    "message": "Hello from Android!",
+    "counter": 2
+  },
+  {
+    "timestamp": "2025-12-25T01:43:37.932407",
+    "message": "Hello from Android!",
+    "counter": 3
+  }
+]
