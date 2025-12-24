@@ -1,0 +1,3 @@
+[submodule "AndriodSubmodule"]
+	path = AndriodSubmodule
+	url = https://github.com/WillzKing/VPaHMD
