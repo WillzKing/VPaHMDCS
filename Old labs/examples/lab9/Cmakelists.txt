@@ -1,0 +1,64 @@
+cmake_minimum_required(VERSION 3.15)
+project(LocationServer)
+
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
+# Указываем toolchain файл ДО project() или в командной строке
+if(NOT DEFINED CMAKE_TOOLCHAIN_FILE)
+    set(CMAKE_TOOLCHAIN_FILE "C:/vcpkg/scripts/buildsystems/vcpkg.cmake" CACHE STRING "")
+endif()
+
+# Находим пакеты
+find_package(ZeroMQ REQUIRED)
+find_package(nlohmann_json REQUIRED)
+find_package(glfw3 REQUIRED)
+find_package(OpenGL REQUIRED)
+find_package(Threads REQUIRED)
+
+# Путь к ImGui
+set(IMGUI_DIR ${CMAKE_CURRENT_SOURCE_DIR}/imgui)
+
+# Проверяем, что ImGui существует
+if(NOT EXISTS ${IMGUI_DIR}/imgui.cpp)
+    message(FATAL_ERROR "ImGui not found at ${IMGUI_DIR}. Run: git clone https://github.com/ocornut/imgui.git")
+endif()
+
+# ImGui библиотека
+add_library(imgui STATIC
+    ${IMGUI_DIR}/imgui.cpp
+    ${IMGUI_DIR}/imgui_demo.cpp
+    ${IMGUI_DIR}/imgui_draw.cpp
+    ${IMGUI_DIR}/imgui_tables.cpp
+    ${IMGUI_DIR}/imgui_widgets.cpp
+    ${IMGUI_DIR}/backends/imgui_impl_glfw.cpp
+    ${IMGUI_DIR}/backends/imgui_impl_opengl3.cpp
+)
+
+target_include_directories(imgui PUBLIC 
+    ${IMGUI_DIR}
+    ${IMGUI_DIR}/backends
+)
+
+target_link_libraries(imgui PUBLIC 
+    glfw 
+    OpenGL::GL
+)
+
+# Наше приложение
+add_executable(location_server main.cpp)
+
+# Находим cppzmq (это header-only библиотека)
+find_path(cppzmq_INCLUDE_DIR zmq.hpp PATHS ${vcpkg_INCLUDE_DIR})
+
+target_include_directories(location_server PRIVATE 
+    ${cppzmq_INCLUDE_DIR}
+)
+
+target_link_libraries(location_server PRIVATE 
+    libzmq
+    nlohmann_json::nlohmann_json
+    imgui
+    Threads::Threads
+    opengl32
+)
