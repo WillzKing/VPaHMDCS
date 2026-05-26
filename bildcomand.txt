@@ -1,4 +1,0 @@
-cd C:\andr\imgui_demo
-Remove-Item -Recurse -Force build -ErrorAction SilentlyContinue
-cmake -B build -DCMAKE_TOOLCHAIN_FILE=C:/Users/stoll/Desktop/visual/imgui_demo/vcpkg/scripts/buildsystems/vcpkg.cmake
-cmake --build build --config Release
