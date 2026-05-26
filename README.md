@@ -95,6 +95,7 @@ Backend-приложение решает следующие задачи:
 │   └── jetbrains.ttf           #   - JetBrains Mono
 ├── drive_test_log.json         # Тестовые данные драйв-теста
 └── build/                      # Сборочная директория (не в Git)
+```
 
 ---
 
