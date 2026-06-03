@@ -18,15 +18,13 @@ void OsmTileTexture::StbLoad(const std::vector<std::byte>& rawBlob) {
     int w, h, c;
     const auto ptr = stbi_load_from_memory(reinterpret_cast<const stbi_uc*>(rawBlob.data()), (int)rawBlob.size(), &w, &h, &c, STBI_rgb_alpha);
     if (ptr) {
-        // OSM тайлы ДОЛЖНЫ быть 256x256 пикселей - это стандарт
         constexpr int EXPECTED_TILE_SIZE = 256;
         
-        // Если размер не совпадает - это критическая ошибка, которая ломает отображение карты!
         if (w != EXPECTED_TILE_SIZE || h != EXPECTED_TILE_SIZE) {
             LogError("[TILE_CRITICAL] INVALID TILE SIZE: expected " + std::to_string(EXPECTED_TILE_SIZE) + "x" + std::to_string(EXPECTED_TILE_SIZE) + 
                    ", got " + std::to_string(w) + "x" + std::to_string(h) + ". TILE WILL BE SKIPPED to prevent rendering artifacts.");
             stbi_image_free(ptr);
-            return; // НЕ загружаем некорректный тайл!
+            return;
         }
         
         const size_t nbytes = size_t(w * h * STBI_rgb_alpha);
@@ -45,7 +43,6 @@ void OsmTileTexture::GlLoad() {
     std::lock_guard<std::mutex> lock(_texMutex); 
     if (!_hasNewData) return;
     
-    // Дополнительная проверка перед загрузкой в OpenGL: тайл должен быть 256x256
     constexpr int EXPECTED_TILE_SIZE = 256;
     if (_width != EXPECTED_TILE_SIZE || _height != EXPECTED_TILE_SIZE) {
         LogError("[TILE_GL_SKIP] Texture size mismatch before GlLoad: " + std::to_string(_width) + "x" + std::to_string(_height) + 

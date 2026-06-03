@@ -5,7 +5,6 @@
 void SetupAmethystStyle() {
     ImGuiStyle& s = ImGui::GetStyle();
     
-    // Spacing & Sizing
     s.WindowPadding    = ImVec2(10.0f, 10.0f);
     s.FramePadding     = ImVec2(8.0f, 5.0f);
     s.CellPadding      = ImVec2(8.0f, 5.0f);
@@ -14,7 +13,6 @@ void SetupAmethystStyle() {
     s.ScrollbarSize    = 14.0f;
     s.GrabMinSize      = 12.0f;
 
-    // Borders & Rounding
     s.WindowBorderSize = 1.0f;
     s.ChildBorderSize  = 1.0f;
     s.PopupBorderSize  = 1.0f;
@@ -27,7 +25,6 @@ void SetupAmethystStyle() {
     s.GrabRounding     = 4.0f;
     s.TabRounding      = 6.0f;
 
-    // Colors: Dark Professional with Blue Accent
     ImVec4* colors = ImGui::GetStyle().Colors;
     colors[ImGuiCol_Text]                  = ImVec4(0.90f, 0.90f, 0.92f, 1.00f);
     colors[ImGuiCol_TextDisabled]          = ImVec4(0.50f, 0.52f, 0.55f, 1.00f);

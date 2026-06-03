@@ -29,7 +29,6 @@ static std::string criterion_to_string(HeatmapCriterion c) {
 void TabMain(RuntimeState& st) {
     std::lock_guard<std::mutex> lk(st.mtx);
     
-    // Location Section
     ImGui::BeginChild("LocationPanel", ImVec2(0, 180), true);
     ImGui::TextColored(ImVec4(0.22f, 0.55f, 0.90f, 1.00f), "Location");
     ImGui::Separator();
@@ -48,7 +47,6 @@ void TabMain(RuntimeState& st) {
 
     ImGui::Spacing();
 
-    // Network Info Section
     ImGui::BeginChild("NetworkPanel", ImVec2(0, 200), true);
     ImGui::TextColored(ImVec4(0.22f, 0.55f, 0.90f, 1.00f), "Active Networks");
     ImGui::Separator();
@@ -164,7 +162,6 @@ void TabLocal(RuntimeState& st) {
 void TabMap(RuntimeState& st) {
     auto& ms = st.mapState;
     
-    // Top Toolbar
     ImGui::BeginChild("MapToolbar", ImVec2(0, 44), true);
     ImGui::Text("Zoom: %d", ms.zoom); ImGui::SameLine();
     ImGui::Text("| Center: %.5f, %.5f", ms.centerLat, ms.centerLon); ImGui::SameLine(380);
@@ -204,7 +201,6 @@ void TabMap(RuntimeState& st) {
 
     ImGui::Spacing();
     
-    // IDW Settings Row
      ImGui::TextColored(ImVec4(0.22f, 0.55f, 0.90f, 1.00f), "IDW Settings");
     ImGui::SameLine(160);
     ImGui::SetNextItemWidth(150);
@@ -222,7 +218,6 @@ void TabMap(RuntimeState& st) {
 
     ImGui::Spacing();
     
-    // Mode & Action Row — больше расстояния
     ImGui::TextColored(ImVec4(0.22f, 0.55f, 0.90f, 1.00f), "Mode");
     ImGui::SameLine(160);
     ImGui::RadioButton("Single image", (int*)&ms.heatmapConfig.perTile, 0);
@@ -313,7 +308,6 @@ void TabMap(RuntimeState& st) {
         }
     }
     
-    // Show Heatmap controls
     ImGui::Spacing();
     ImGui::Checkbox("Show Heatmap", &ms.showHeat);
     ImGui::SameLine(200);
@@ -330,7 +324,6 @@ void TabMap(RuntimeState& st) {
 
     ImGui::Spacing();
 
-    // Map View
     bool open = true;
     DrawMapWindow(open, st);
 }
